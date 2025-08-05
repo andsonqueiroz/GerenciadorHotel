@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <h1 class="h3 mb-4 text-gray-800">Serviços Cadastrados</h1>
+
+  <a href="{% url 'criar_servico' %}" class="btn btn-primary mb-3">Adicionar</a>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+            <th class="text-center">Tipo</th>
+            <th class="text-center">Valor</th>
+            <th class="text-center">Descrição</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for servicos in servicos_adicionais %}
+          <tr>
+            <td class="text-center">{{ servicos.tipo }}</td>
+            <td class="text-center">{{ servicos.valor }}</td>
+            <td class="text-center">{{ servicos.descricao }}</td>
+            <td class="text-center">
+              <div class="d-flex justify-content-center">
+                <a href="{% url 'editar_servico' servicos.id %}" class="btn btn-warning btn-sm">Editar</a>
+                <a href="{% url 'deletar_servico' servicos.id %}" class="btn btn-danger btn-sm">Excluir</a>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5">Nenhum serviço cadastrado.</td>
+          </tr>        
+        {% endfor %}
+      </tbody>              
+    </table>
+  </div>
+{% endblock %}
+  
+  

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <h1 class="h3 mb-4 text-gray-800">Lista de Funcionários</h1>
+
+  <a href="{% url 'criar_funcionario' %}" class="btn btn-primary mb-3">Adicionar</a>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center">Nome</th>
+        <th class="text-center">CPF</th>
+        <th class="text-center">Cargo</th>
+        <th class="text-center">Salario</th>
+        <th class="text-center">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for funcionario in funcionarios %}
+        <tr>
+          <td class="text-center">{{ funcionario.nome }}</td>
+          <td class="text-center">{{ funcionario.cpf }}</td>
+          <td class="text-center">{{ funcionario.cargo }}</td>
+          <td class="text-center">{{ funcionario.salario }}</td>
+          <td class="text-center">
+            <div class="d-flex justify-content-center">
+              <a href="{% url 'editar_funcionario' funcionario.id %}" class="btn btn-warning btn-sm">Editar</a>
+              <a href="{% url 'deletar_funcionario' funcionario.id %}" class="btn btn-danger btn-sm">Excluir</a>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5">Nenhum quarto cadastrado.</td>
+        </tr>        
+      {% endfor %}
+    </tbody>              
+  </table>
+</div>
+{% endblock %}
+

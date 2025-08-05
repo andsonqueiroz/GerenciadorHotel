@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <h1 class="h3 mb-4 text-gray-800">Lista de Reservas</h1>
+
+  <a href="{% url 'cadastrar_reserva' %}" class="btn btn-primary mb-3">Nova Reserva</a>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Quarto</th>
+        <th>Hóspede</th>
+        <th>Data de entrada</th>
+        <th>Data de saída</th>
+        <th>Quantidade de pessoas</th>
+        <th>Valor da reserva</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reserva in reservas %}
+      <tr>
+        <td>{{ reserva.quarto }}</td>
+        <td>{{ reserva.hospede }}</td>
+        <td>{{ reserva.dtEntrada }}</td>
+        <td>{{ reserva.dtSaida }}</td>
+        <td>{{ reserva.quantPessoas }}</td>
+        <td>{{ reserva.valor_total }}</td>
+        <td>
+          <a href="{% url 'editar_reserva' reserva.id %}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{% url 'deletar_reserva' reserva.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir esta reserva?')">Excluir</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">Nenhuma reserva encontrada.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}

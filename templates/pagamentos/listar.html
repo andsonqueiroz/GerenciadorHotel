@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <h1 class="h3 mb-4 text-gray-800">Lista de Quartos</h1>
+
+  <a href="{% url 'cadastrar_quarto' %}" class="btn btn-primary mb-3">Novo Quarto</a>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Número</th>
+        <th>Tipo</th>
+        <th>Capacidade</th>
+        <th>Preço Diária (R$)</th>
+        <th>Disponibilidade</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for quarto in quartos %}
+      <tr>
+        <td>{{ quarto.numero }}</td>
+        <td>{{ quarto.tipo }}</td>
+        <td>{{ quarto.capacidade }}</td>
+        <td>{{ quarto.preco_diaria }}</td>
+          {% if quarto.disponibilidade %}
+            <td class="text-success">Disponível</td>
+          {% else %}
+            <td class="text-danger">Indisponível</td>
+          {% endif %}
+        <td>
+          <a href="{% url 'editar_quarto' quarto.id %}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{% url 'deletar_quarto' quarto.id %}" class="btn btn-danger btn-sm">Excluir</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">Nenhum quarto cadastrado.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center mb-4 text-gray-800 fw-bold">DASHBOARD</h1>
+
+<div class="container-fluid">
+
+  <h1 class="h3 mb-4 text-gray-800">Lista de Reservas</h1>
+
+  <a href="{% url 'cadastrar_reserva' %}" class="btn btn-primary mb-3">Nova Reserva</a>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Quarto</th>
+        <th>Hóspede</th>
+        <th>Data de entrada</th>
+        <th>Data de saída</th>
+        <th>Quantidade de pessoas</th>
+        <th>Valor da reserva</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reserva in reservas %}
+      <tr>
+        <td>{{ reserva.quarto }}</td>
+        <td>{{ reserva.hospede }}</td>
+        <td>{{ reserva.dtEntrada }}</td>
+        <td>{{ reserva.dtSaida }}</td>
+        <td>{{ reserva.quantPessoas }}</td>
+        <td>{{ reserva.valor_total }}</td>
+        <td>
+          <a href="{% url 'editar_reserva' reserva.id %}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{% url 'deletar_reserva' reserva.id %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir esta reserva?')">Excluir</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">Nenhuma reserva encontrada.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+
+<div class="container-fluid">
+
+  <h1 class="h3 mb-4 text-gray-800">Lista de Hóspedes</h1>
+
+  <a href="{% url 'cadastrar_hospede' %}" class="btn btn-primary mb-3">Novo Hóspede</a>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for hospede in hospedes %}
+      <tr>
+        <td>{{ hospede.nome }}</td>
+        <td>{{ hospede.telefone }}</td>
+          {% if hospede.ativo %}
+            <td class="text-success">Hóspede ativo</td>
+          {% else %}
+            <td class="text-danger">Hóspede não ativo</td>
+          {% endif %}
+        <td>
+          <a href="{% url 'editar_hospede' hospede.cpf %}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{% url 'deletar_hospede' hospede.cpf %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este hóspede?')">Excluir</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">Nenhum hóspede cadastrado.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+<br>
+
+<div class="container-fluid">
+
+  <h1 class="h3 mb-4 text-gray-800">Lista de Quartos</h1>
+
+  <a href="{% url 'cadastrar_quarto' %}" class="btn btn-primary mb-3">Novo Quarto</a>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Número</th>
+        <th>Tipo</th>
+        <th>Capacidade</th>
+        <th>Preço Diária (R$)</th>
+        <th>Disponibilidade</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for quarto in quartos %}
+      <tr>
+        <td>{{ quarto.numero }}</td>
+        <td>{{ quarto.tipo }}</td>
+        <td>{{ quarto.capacidade }}</td>
+        <td>{{ quarto.preco_diaria }}</td>
+          {% if quarto.disponibilidade %}
+            <td class="text-success">Disponível</td>
+          {% else %}
+            <td class="text-danger">Indisponível</td>
+          {% endif %}
+        <td>
+          <a href="{% url 'editar_quarto' quarto.numero %}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{% url 'deletar_quarto' quarto.numero %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este quarto?')">Excluir</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">Nenhum quarto cadastrado.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}

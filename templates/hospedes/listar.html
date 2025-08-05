@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <h1 class="h3 mb-4 text-gray-800">Lista de Hóspedes</h1>
+
+  <a href="{% url 'cadastrar_hospede' %}" class="btn btn-primary mb-3">Novo Hóspede</a>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Situação</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for hospede in hospedes %}
+      <tr>
+        <td>{{ hospede.nome }}</td>
+        <td>{{ hospede.telefone }}</td>
+          {% if hospede.ativo %}
+            <td class="text-success">Hóspede ativo</td>
+          {% else %}
+            <td class="text-danger">Hóspede não ativo</td>
+          {% endif %}
+        <td>
+          <a href="{% url 'editar_hospede' hospede.cpf %}" class="btn btn-warning btn-sm">Editar</a>
+          <a href="{% url 'deletar_hospede' hospede.cpf %}" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este hóspede?')">Excluir</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">Nenhum hóspede cadastrado.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}
